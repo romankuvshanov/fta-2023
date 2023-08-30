@@ -28,3 +28,15 @@
   @include text-muted;
   margin-right: 10px;
 }
+
+.games-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  column-gap: 20px;
+  row-gap: 15px;
+  justify-items: center;
+
+  &__no-games {
+    @include text-regular;
+  }
+}

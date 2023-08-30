@@ -1,5 +1,25 @@
 @import "src/assets/styles/text";
 
+.loading {
+  text-align: center;
+
+  &__icon {
+    font-size: 30px;
+    margin-bottom: 15px;
+    color: #fff;
+  }
+
+  &__message {
+    @include text-regular;
+    color: #fff;
+  }
+}
+
+.error {
+  background-color: #f0f8ff;
+  border-radius: 25px;
+}
+
 .header {
   @include title-h1;
   display: flex;
@@ -32,10 +52,6 @@
   }
 }
 
-.game-thumbnail {
-  //margin-bottom: 10px;
-}
-
 .small-title {
   @include title-h2;
   margin-bottom: 5px;
@@ -51,10 +67,6 @@
   margin-bottom: 10px;
 }
 
-.game-system-requirements-wrapper {
-  //margin-bottom: 10px;
-}
-
 .game-info-title {
   @include text-regular;
   margin-bottom: 2px;
@@ -62,5 +74,14 @@
 
   &__info {
     font-weight: 400;
+  }
+}
+
+.carousel {
+  background-color: #23272B;
+
+  &__image-wrapper {
+    //display: flex;
+    //align-items: center;
   }
 }
