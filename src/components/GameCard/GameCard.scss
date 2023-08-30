@@ -1,0 +1,20 @@
+@import "src/assets/styles/text";
+
+.game-card {
+
+  &__game-info {
+    background-color: #32383e;
+    padding: 15px;
+  }
+}
+
+.game-info {
+  &__title {
+    @include title-h3;
+    margin-bottom: 5px;
+  }
+
+  &__text {
+    @include text-muted;
+  }
+}

@@ -5,12 +5,14 @@ import Games from "./pages/Games/Games";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={"/"} element={<Games />}></Route>
-        <Route path={"/game"} element={<Game />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <div className={"app-wrapper"}>
+      <BrowserRouter>
+        <Routes>
+          <Route path={"/"} element={<Games />}></Route>
+          <Route path={"/game"} element={<Game />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

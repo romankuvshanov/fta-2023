@@ -5,6 +5,7 @@ import {
   sortingOptions,
   tagsOptions,
 } from "../../common/sortingOptions";
+import GameCard from "../../components/GameCard/GameCard";
 
 const handleChange = (value) => {
   console.log(`selected ${value}`);
@@ -13,42 +14,46 @@ const handleChange = (value) => {
 export default function Games() {
   return (
     <>
-      <h1>Top Free Games for PC and Browser!</h1>
-      <h2>Sorting options</h2>
-      <div>
-        Platform:
-        <Select
-          defaultValue="all"
-          style={{
-            width: 200,
-          }}
-          onChange={handleChange}
-          options={platformOptions}
-        />
+      <h1 className={"headline"}>Top Free Games for PC and Browser!</h1>
+      <h2 className={"title-small"}>Sorting options</h2>
+      <div className={"filters-wrapper"}>
+        <div className={"filter"}>
+          <span className={"filter-title"}>Platform:</span>
+          <Select
+            defaultValue="all"
+            style={{
+              width: "auto",
+            }}
+            onChange={handleChange}
+            options={platformOptions}
+          />
+        </div>
+        <div className={"filter"}>
+          <span className={"filter-title"}>Genre/Tag:</span>
+          <Select
+            defaultValue="all"
+            style={{
+              width: "auto",
+            }}
+            onChange={handleChange}
+            options={tagsOptions}
+          />
+        </div>
+        <div className={"filter"}>
+          <span className={"filter-title"}>Sort By:</span>
+          <Select
+            defaultValue="release-date"
+            style={{
+              width: "100%",
+            }}
+            onChange={handleChange}
+            options={sortingOptions}
+          />
+        </div>
       </div>
-      <div>
-        Genre/Tag:
-        <Select
-          defaultValue="all"
-          style={{
-            width: 200,
-          }}
-          onChange={handleChange}
-          options={tagsOptions}
-        />
-      </div>
-      <div>
-        Sort By:
-        <Select
-          defaultValue="release-date"
-          style={{
-            width: 200,
-          }}
-          onChange={handleChange}
-          options={sortingOptions}
-        />
-      </div>
-      <h2>Games</h2>
+
+      <h2 className={"title-small"}>Games:</h2>
+        <GameCard />
     </>
   );
 }

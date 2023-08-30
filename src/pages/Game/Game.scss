@@ -1,0 +1,66 @@
+@import "src/assets/styles/text";
+
+.header {
+  @include title-h1;
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+  margin-bottom: 25px;
+
+  &__headline {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__back-link {
+    filter: drop-shadow(-1px -1px 0 rgba(0, 0, 0, 0.3));
+    display: flex;
+    align-items: center;
+  }
+}
+
+.thumbnail-info-requirements-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(365px, 1fr));
+  column-gap: 20px;
+  row-gap: 15px;
+  margin-bottom: 15px;
+
+  @media screen and (max-width: 1025px) {
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  }
+}
+
+.game-thumbnail {
+  //margin-bottom: 10px;
+}
+
+.small-title {
+  @include title-h2;
+  margin-bottom: 5px;
+
+  &__screenshots {
+    @media screen and (min-width: 1440px) {
+      text-align: center;
+    }
+  }
+}
+
+.game-info-wrapper {
+  margin-bottom: 10px;
+}
+
+.game-system-requirements-wrapper {
+  //margin-bottom: 10px;
+}
+
+.game-info-title {
+  @include text-regular;
+  margin-bottom: 2px;
+  font-weight: 700;
+
+  &__info {
+    font-weight: 400;
+  }
+}

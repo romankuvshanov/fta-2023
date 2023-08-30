@@ -1,0 +1,36 @@
+@mixin title-h1 {
+  color: #aaa;
+  text-shadow: -1px -1px 0 rgba(0,0,0,.3);
+  font-family: 'Roboto', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+@mixin title-h2 {
+  color: #aaa;
+  text-shadow: -1px -1px 0 rgba(0,0,0,.3);
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+@mixin title-h3 {
+  color: #aaa;
+  text-shadow: -1px -1px 0 rgba(0,0,0,.3);
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+@mixin text-regular {
+  color: #aaa;
+  text-shadow: -1px -1px 0 rgba(0,0,0,.3);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+@mixin text-muted {
+  color: #7a8288;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}

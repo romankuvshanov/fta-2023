@@ -1,0 +1,30 @@
+@import "src/assets/styles/text";
+
+.headline {
+  margin-bottom: 45px;
+  @include title-h1;
+}
+
+.title-small {
+  margin-bottom: 20px;
+  @include title-h2;
+}
+
+.filters-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  column-gap: 20px;
+  margin-bottom: 15px;
+}
+
+.filter {
+  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+}
+
+.filter-title {
+  @include text-muted;
+  margin-right: 10px;
+}
