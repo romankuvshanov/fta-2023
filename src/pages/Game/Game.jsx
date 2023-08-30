@@ -97,7 +97,7 @@ export default function Game() {
               alt={"Game thumbnail"}
               className={"game-thumbnail"}
             />
-            <div>
+            <div className={"game-information-wrapper"}>
               <h2 className={"small-title"}>Game's information:</h2>
               <div className={"game-info-wrapper"}>
                 <p className={"game-info-title"}>
@@ -107,25 +107,25 @@ export default function Game() {
                       new Date(gameData?.release_date).toLocaleDateString(
                         "ru-RU",
                       )) ||
-                      "?"}
+                      "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Publisher:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.publisher || "?"}
+                    {gameData?.publisher || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Developer:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.developer || "?"}
+                    {gameData?.developer || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Genre:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.genre || "?"}
+                    {gameData?.genre || "n/a"}
                   </span>
                 </p>
               </div>
@@ -136,31 +136,31 @@ export default function Game() {
                 <p className={"game-info-title"}>
                   OS:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.os || "?"}
+                    {gameData?.minimum_system_requirements?.os || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Processor:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.processor || "?"}
+                    {gameData?.minimum_system_requirements?.processor || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Memory:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.memory || "?"}
+                    {gameData?.minimum_system_requirements?.memory || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Graphics:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.graphics || "?"}
+                    {gameData?.minimum_system_requirements?.graphics || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Storage:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.storage || "?"}
+                    {gameData?.minimum_system_requirements?.storage || "n/a"}
                   </span>
                 </p>
               </div>
@@ -169,9 +169,9 @@ export default function Game() {
           <h2 className={"small-title small-title__screenshots"}>
             Screenshots:{" "}
           </h2>
-          <Carousel className={"carousel"}>
-            {(gameData?.screenshots?.length > 0 &&
-              gameData?.screenshots?.map((screenshot) => {
+          {gameData?.screenshots?.length > 0 ? (
+            <Carousel className={"carousel"}>
+              {gameData?.screenshots?.map((screenshot) => {
                 return (
                   <div
                     key={screenshot?.id}
@@ -184,16 +184,11 @@ export default function Game() {
                     />
                   </div>
                 );
-              })) || (
-              <div className={"carousel__image-wrapper"}>
-                <img
-                  src={screenShotPlaceholder}
-                  alt={"Screenshot placeholder"}
-                  style={contentStyle}
-                />
-              </div>
-            )}
-          </Carousel>
+              })}
+            </Carousel>
+          ) : (
+            <p className={'screenshots-message'}>Screenshots are not available</p>
+          )}
         </>
       )}
     </>

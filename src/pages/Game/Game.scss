@@ -46,10 +46,34 @@
   column-gap: 20px;
   row-gap: 15px;
   margin-bottom: 15px;
+  border-bottom: 2px solid #aaa;
+  @media screen and (min-width: 610px) {
+    padding-bottom: 30px;
+  }
+  padding-bottom: 10px;
 
   @media screen and (max-width: 1025px) {
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   }
+}
+
+.game-thumbnail {
+  width: 100%;
+}
+
+.game-information-wrapper {
+  @media screen and (max-width: 610px){
+    border-top: 2px solid #aaa;
+    padding-top: 10px;
+  }
+
+  @media screen and (min-width: 610px) {
+    border-left: 2px solid #aaa;
+    border-right: 2px solid #aaa;
+    border-top: none;
+    padding: 0 20px;
+  }
+
 }
 
 .small-title {
@@ -84,4 +108,8 @@
     //display: flex;
     //align-items: center;
   }
+}
+
+.screenshots-message {
+  @include text-regular;
 }
