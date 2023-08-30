@@ -3,9 +3,8 @@ import { Button, Carousel, Result } from "antd";
 import { Link, useParams } from "react-router-dom";
 import arrowBack from "../../assets/icons/arrow_back.svg";
 import thumbnailPlaceholder from "../../assets/images/thumbnail_placeholder.png";
-import screenShotPlaceholder from "../../assets/images/screenshot_placeholder.png";
-import { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
+import {useGetGameQuery} from "../../services/freetogame";
 
 const contentStyle = {
   borderBottom: "25px solid #23272B",
@@ -14,49 +13,12 @@ const contentStyle = {
 };
 
 export default function Game() {
-  const [loading, setLoading] = useState(true);
-  const [gameData, setGameData] = useState(null);
-  const [error, setError] = useState(null);
   const { gameId } = useParams();
-
-  useEffect(() => {
-    fetch(
-      `https://free-to-play-games-database.p.rapidapi.com/api/game?id=${gameId}`,
-      {
-        method: "GET",
-        headers: {
-          "X-RapidAPI-Key":
-            "0f563ab817msh34a455c81e6427dp126b28jsne042c0cc6ef7",
-          "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com",
-        },
-      },
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            `This is an HTTP error: The status is ${response.status}`,
-          );
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setGameData(data);
-        setError(null);
-        console.log(data);
-      })
-      .catch((error) => {
-        setError(error?.message || "Something went wrong");
-        setGameData(null);
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [gameId]);
+  const { data, error, isLoading } = useGetGameQuery(gameId);
 
   return (
     <>
-      {loading && (
+      {isLoading && (
         <div className={"loading"}>
           <LoadingOutlined className={"loading__icon"} />
           <p className={"loading__message"}>Loading... Please, wait</p>
@@ -79,7 +41,7 @@ export default function Game() {
 
       {console.log(error)}
 
-      {gameData && (
+      {data && (
         <>
           <header className={"header"}>
             <span>
@@ -87,11 +49,11 @@ export default function Game() {
                 <img src={arrowBack} alt={"Go back icon"} />
               </Link>
             </span>
-            <h1 className={"header__headline"}>{gameData?.title || "?"}</h1>
+            <h1 className={"header__headline"}>{data?.title || "?"}</h1>
           </header>
           <div className={"thumbnail-info-requirements-wrapper"}>
             <img
-              src={gameData?.thumbnail || thumbnailPlaceholder}
+              src={data?.thumbnail || thumbnailPlaceholder}
               width={365}
               height={206}
               alt={"Game thumbnail"}
@@ -103,8 +65,8 @@ export default function Game() {
                 <p className={"game-info-title"}>
                   Release date:{" "}
                   <span className={"game-info-title__info"}>
-                    {(gameData?.release_date &&
-                      new Date(gameData?.release_date).toLocaleDateString(
+                    {(data?.release_date &&
+                      new Date(data?.release_date).toLocaleDateString(
                         "ru-RU",
                       )) ||
                       "n/a"}
@@ -113,19 +75,19 @@ export default function Game() {
                 <p className={"game-info-title"}>
                   Publisher:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.publisher || "n/a"}
+                    {data?.publisher || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Developer:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.developer || "n/a"}
+                    {data?.developer || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Genre:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.genre || "n/a"}
+                    {data?.genre || "n/a"}
                   </span>
                 </p>
               </div>
@@ -136,31 +98,31 @@ export default function Game() {
                 <p className={"game-info-title"}>
                   OS:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.os || "n/a"}
+                    {data?.minimum_system_requirements?.os || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Processor:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.processor || "n/a"}
+                    {data?.minimum_system_requirements?.processor || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Memory:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.memory || "n/a"}
+                    {data?.minimum_system_requirements?.memory || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Graphics:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.graphics || "n/a"}
+                    {data?.minimum_system_requirements?.graphics || "n/a"}
                   </span>
                 </p>
                 <p className={"game-info-title"}>
                   Storage:{" "}
                   <span className={"game-info-title__info"}>
-                    {gameData?.minimum_system_requirements?.storage || "n/a"}
+                    {data?.minimum_system_requirements?.storage || "n/a"}
                   </span>
                 </p>
               </div>
@@ -169,9 +131,9 @@ export default function Game() {
           <h2 className={"small-title small-title__screenshots"}>
             Screenshots:{" "}
           </h2>
-          {gameData?.screenshots?.length > 0 ? (
+          {data?.screenshots?.length > 0 ? (
             <Carousel className={"carousel"}>
-              {gameData?.screenshots?.map((screenshot) => {
+              {data?.screenshots?.map((screenshot) => {
                 return (
                   <div
                     key={screenshot?.id}
