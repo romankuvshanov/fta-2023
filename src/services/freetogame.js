@@ -1,10 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { REHYDRATE } from "redux-persist";
 
-export const freetogameApi = createApi({
-  reducerPath: "freetogameApi",
-  keepUnusedDataFor: 60 * 5,
-  baseQuery: fetchBaseQuery({
+const staggeredBaseQuery = retry(
+  fetchBaseQuery({
     baseUrl: "https://free-to-play-games-database.p.rapidapi.com/api/",
     prepareHeaders: (headers) => {
       headers.set(
@@ -18,9 +16,18 @@ export const freetogameApi = createApi({
       return headers;
     },
   }),
+  {
+    maxRetries: 3,
+  },
+);
+
+export const freetogameApi = createApi({
+  reducerPath: "freetogameApi",
+  keepUnusedDataFor: 60 * 5,
+  baseQuery: staggeredBaseQuery,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {
-      return action.payload[reducerPath];
+      return action?.payload?.[reducerPath];
     }
   },
   endpoints: (builder) => ({

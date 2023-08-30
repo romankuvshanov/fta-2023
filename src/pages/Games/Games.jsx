@@ -1,5 +1,5 @@
 import "./Games.scss";
-import { Result, Select } from "antd";
+import { Pagination, Result, Select } from "antd";
 import {
   platformOptions,
   sortingOptions,
@@ -14,6 +14,7 @@ export default function Games() {
   const [platform, setPlatform] = useState("all");
   const [tag, setTag] = useState("all");
   const [sort, setSort] = useState("release-date");
+  const [startEnd, setStartEnd] = useState({ start: 0, end: 10 });
 
   const { data, error, isLoading } = useGetGamesQuery({
     platform: platform,
@@ -80,15 +81,23 @@ export default function Games() {
         ></Result>
       )}
 
-
-
       {data && (
         <div className={"games-wrapper"}>
-          {data?.map((game) => {
+          {data?.slice(startEnd?.start, startEnd?.end)?.map((game) => {
             return <GameCard gameData={game} key={game?.id} />;
           }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
         </div>
       )}
+      <Pagination
+        total={data?.length}
+        showSizeChanger
+        showQuickJumper
+        showTotal={(total) => `Total ${total} items`}
+        className={"pagination"}
+        onChange={(page, pageSize) =>
+          setStartEnd({ start: (page - 1) * pageSize, end: page * pageSize })
+        }
+      />
     </>
   );
 }
