@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { REHYDRATE } from "redux-persist";
 
 export const freetogameApi = createApi({
   reducerPath: "freetogameApi",
@@ -17,6 +18,11 @@ export const freetogameApi = createApi({
       return headers;
     },
   }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === REHYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     getGames: builder.query({
       query: (arg) => {
