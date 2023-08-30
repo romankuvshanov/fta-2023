@@ -21,7 +21,7 @@ export default function Games() {
     sort: sort,
   });
 
-  console.log(data);
+  console.log(error);
 
   return (
     <>
@@ -76,9 +76,11 @@ export default function Games() {
           className={"error"}
           status="error"
           title="Submission Failed"
-          subTitle={error}
+          subTitle={error?.error}
         ></Result>
       )}
+
+
 
       {data && (
         <div className={"games-wrapper"}>

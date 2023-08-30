@@ -30,7 +30,7 @@ export default function Game() {
           className={"error"}
           status="error"
           title="Submission Failed"
-          subTitle={error}
+          subTitle={error?.error}
           extra={
             <Link to={"/"}>
               <Button type="primary">Back Home</Button>
