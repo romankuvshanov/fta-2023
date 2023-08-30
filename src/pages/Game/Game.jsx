@@ -170,17 +170,21 @@ export default function Game() {
             Screenshots:{" "}
           </h2>
           <Carousel className={"carousel"}>
-            {gameData?.screenshots?.map((screenshot) => {
-              return (
-                <div key={screenshot?.id} className={"carousel__image-wrapper"}>
-                  <img
-                    src={screenshot?.image}
-                    alt={"Screenshot from the game"}
-                    style={contentStyle}
-                  />
-                </div>
-              );
-            }) || (
+            {(gameData?.screenshots?.length > 0 &&
+              gameData?.screenshots?.map((screenshot) => {
+                return (
+                  <div
+                    key={screenshot?.id}
+                    className={"carousel__image-wrapper"}
+                  >
+                    <img
+                      src={screenshot?.image}
+                      alt={"Screenshot from the game"}
+                      style={contentStyle}
+                    />
+                  </div>
+                );
+              })) || (
               <div className={"carousel__image-wrapper"}>
                 <img
                   src={screenShotPlaceholder}

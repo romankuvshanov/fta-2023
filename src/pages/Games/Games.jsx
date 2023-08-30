@@ -1,5 +1,5 @@
 import "./Games.scss";
-import { Select } from "antd";
+import { Result, Select } from "antd";
 import {
   platformOptions,
   sortingOptions,
@@ -7,6 +7,7 @@ import {
 } from "../../common/sortingOptions";
 import GameCard from "../../components/GameCard/GameCard";
 import { useEffect, useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function Games() {
   const [platform, setPlatform] = useState("all");
@@ -17,9 +18,12 @@ export default function Games() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
+    setGames(null);
+
     fetch(
       `https://free-to-play-games-database.p.rapidapi.com/api/games?platform=${platform}&sort-by=${sort}${
-        tag !== "all" && `&category=${tag}`
+        tag !== "all" ? `&category=${tag}` : ""
       }`,
       {
         method: "GET",
@@ -94,11 +98,29 @@ export default function Games() {
       </div>
 
       <h2 className={"title-small"}>Games:</h2>
-      <div className={"games-wrapper"}>
-        {games?.map((game) => {
-          return <GameCard gameData={game} key={game?.id} />;
-        }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
-      </div>
+      {loading && (
+        <div className={"loading"}>
+          <LoadingOutlined className={"loading__icon"} />
+          <p className={"loading__message"}>Loading... Please, wait</p>
+        </div>
+      )}
+
+      {error && (
+        <Result
+          className={"error"}
+          status="error"
+          title="Submission Failed"
+          subTitle={error}
+        ></Result>
+      )}
+
+      {games && (
+        <div className={"games-wrapper"}>
+          {games?.map((game) => {
+            return <GameCard gameData={game} key={game?.id} />;
+          }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
+        </div>
+      )}
     </>
   );
 }
