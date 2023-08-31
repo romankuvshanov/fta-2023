@@ -4,6 +4,7 @@ import { REHYDRATE } from "redux-persist";
 const staggeredBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: "https://free-to-play-games-database.p.rapidapi.com/api/",
+    // OR "https://thingproxy.freeboard.io/fetch/https://www.freetogame.com/api/"
     prepareHeaders: (headers) => {
       headers.set(
         "X-RapidAPI-Key",
