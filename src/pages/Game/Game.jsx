@@ -1,6 +1,6 @@
 import "./Game.scss";
 import { Button, Carousel, Result } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import arrowBack from "../../assets/icons/arrow_back.svg";
 import thumbnailPlaceholder from "../../assets/images/thumbnail_placeholder.png";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -9,6 +9,7 @@ import { useGetGameQuery } from "../../services/freetogame";
 export default function Game() {
   const { gameId } = useParams();
   const { data, error, isFetching } = useGetGameQuery(gameId);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -19,9 +20,9 @@ export default function Game() {
           title="Submission Failed"
           subTitle={error?.error}
           extra={
-            <Link to={"/"}>
-              <Button type="primary">Back Home</Button>
-            </Link>
+            <Button type="primary" onClick={() => navigate(-1)}>
+              Back Home
+            </Button>
           }
         ></Result>
       ) : isFetching ? (
@@ -32,10 +33,8 @@ export default function Game() {
       ) : data ? (
         <>
           <header className={"header"}>
-            <span>
-              <Link to={"/"} className={"header__back-link"}>
-                <img src={arrowBack} alt={"Go back icon"} />
-              </Link>
+            <span className={"header__back-link"} onClick={() => navigate(-1)}>
+              <img src={arrowBack} alt={"Go back icon"} />
             </span>
             <h1 className={"header__headline"}>{data?.title || "?"}</h1>
           </header>

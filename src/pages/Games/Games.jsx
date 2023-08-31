@@ -6,20 +6,26 @@ import {
   tagsOptions,
 } from "../../common/sortingOptions";
 import GameCard from "../../components/GameCard/GameCard";
-import { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useGetGamesQuery } from "../../services/freetogame";
+import { useSearchParams } from "react-router-dom";
 
 export default function Games() {
-  const [platform, setPlatform] = useState("all");
-  const [tag, setTag] = useState("all");
-  const [sort, setSort] = useState("release-date");
-  const [paginationInfo, setPaginationInfo] = useState({
-    currentPage: 1,
-    pageSize: 10,
+  const [searchParams, setSearchParams] = useSearchParams({
+    platform: "all",
+    tag: "all",
+    sort: "release-date",
+    currentPage: '1',
+    pageSize: '10',
   });
 
-  const { data, error, isFetching  } = useGetGamesQuery({
+  const platform = searchParams.get("platform");
+  const tag = searchParams.get("tag");
+  const sort = searchParams.get("sort");
+  const currentPage = searchParams.get("currentPage");
+  const pageSize = searchParams.get("pageSize");
+
+  const { data, error, isFetching } = useGetGamesQuery({
     platform: platform,
     tag: tag,
     sort: sort,
@@ -38,9 +44,11 @@ export default function Games() {
           <Select
             defaultValue="all"
             className={"filter__select"}
+            value={platform}
             onChange={(value) => {
-              setPlatform(value);
-              setPaginationInfo({ ...paginationInfo, currentPage: 1 });
+              searchParams.set("platform", value);
+              searchParams.set("currentPage", '1');
+              setSearchParams(searchParams);
             }}
             options={platformOptions}
           />
@@ -50,9 +58,12 @@ export default function Games() {
           <Select
             defaultValue="all"
             className={"filter__select"}
+            value={tag}
             onChange={(value) => {
-              setTag(value);
-              setPaginationInfo({ ...paginationInfo, currentPage: 1 });
+                searchParams.set("tag", value);
+                searchParams.set("currentPage", '1');
+                setSearchParams(searchParams);
+
             }}
             options={tagsOptions}
           />
@@ -62,9 +73,12 @@ export default function Games() {
           <Select
             defaultValue="release-date"
             className={"filter__select"}
+            value={sort}
             onChange={(value) => {
-              setSort(value);
-              setPaginationInfo({ ...paginationInfo, currentPage: 1 });
+                searchParams.set("sort", value);
+                searchParams.set("currentPage", '1');
+                setSearchParams(searchParams);
+
             }}
             options={sortingOptions}
           />
@@ -79,7 +93,7 @@ export default function Games() {
           title="Submission Failed"
           subTitle={error?.error}
         ></Result>
-      ) : isFetching  ? (
+      ) : isFetching ? (
         <div className={"loading"}>
           <LoadingOutlined className={"loading__icon"} />
           <p className={"loading__message"}>Loading... Please, wait</p>
@@ -88,10 +102,7 @@ export default function Games() {
         <>
           <div className={"games-wrapper"}>
             {data
-              ?.slice(
-                (paginationInfo?.currentPage - 1) * paginationInfo?.pageSize,
-                paginationInfo?.currentPage * paginationInfo?.pageSize,
-              )
+              ?.slice((currentPage - 1) * pageSize, currentPage * pageSize)
               ?.map((game) => {
                 return <GameCard gameData={game} key={game?.id} />;
               }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
@@ -102,11 +113,15 @@ export default function Games() {
             showQuickJumper
             showTotal={(total) => `Total ${total} items`}
             className={"pagination"}
-            onChange={(page, pageSize) =>
-              setPaginationInfo({ currentPage: page, pageSize: pageSize })
+            onChange={(page, pageSize) => {
+                searchParams.set("pageSize", (pageSize).toString());
+                searchParams.set("currentPage", (page).toString());
+                setSearchParams(searchParams);
             }
-            current={paginationInfo?.currentPage}
-            pageSize={paginationInfo?.pageSize}
+
+            }
+            current={+currentPage}
+            pageSize={+pageSize}
             // defaultCurrent={paginationInfo?.currentPage}
             // defaultPageSize={paginationInfo?.pageSize}
           />
