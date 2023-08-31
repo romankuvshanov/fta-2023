@@ -1,6 +1,6 @@
 # How to run
 
-Run npm install then npm start. You can also go to: 
+Run npm install then npm start. You can also go to: https://fta-2023.vercel.app/
 
 ## Video
 
