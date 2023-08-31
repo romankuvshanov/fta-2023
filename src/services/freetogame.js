@@ -1,9 +1,12 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { REHYDRATE } from "redux-persist";
 
+const baseUrl = 'https://free-to-play-games-database.p.rapidapi.com/api/';
+//const baseUrl = 'https://thingproxy.freeboard.io/fetch/https://www.freetogame.com/api/';
+
 const staggeredBaseQuery = retry(
   fetchBaseQuery({
-    baseUrl: "https://free-to-play-games-database.p.rapidapi.com/api/",
+    baseUrl: baseUrl,
     // OR "https://thingproxy.freeboard.io/fetch/https://www.freetogame.com/api/"
     prepareHeaders: (headers) => {
       headers.set(

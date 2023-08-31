@@ -16,7 +16,7 @@ export default function Games() {
     tag: "all",
     sort: "release-date",
     currentPage: "1",
-    pageSize: "10",
+    pageSize: "12",
   });
 
   const platform = searchParams.get("platform");
@@ -25,7 +25,7 @@ export default function Games() {
   const currentPage = searchParams.get("currentPage");
   const pageSize = searchParams.get("pageSize");
 
-  const { data, error, isFetching, refetch  } = useGetGamesQuery({
+  const { data, error, isFetching, refetch } = useGetGamesQuery({
     platform: platform,
     tag: tag,
     sort: sort,
@@ -38,7 +38,7 @@ export default function Games() {
       <h2 className={"title-small"}>Sorting options</h2>
       <div className={"filters-wrapper"}>
         <div className={"filter"}>
-          <span className={"filter-title"}>Platform:</span>
+          <span className={"filter__title"}>Platform:</span>
           <Select
             defaultValue="all"
             className={"filter__select"}
@@ -52,7 +52,7 @@ export default function Games() {
           />
         </div>
         <div className={"filter"}>
-          <span className={"filter-title"}>Genre/Tag:</span>
+          <span className={"filter__title"}>Genre/Tag:</span>
           <Select
             defaultValue="all"
             className={"filter__select"}
@@ -66,7 +66,7 @@ export default function Games() {
           />
         </div>
         <div className={"filter"}>
-          <span className={"filter-title"}>Sort By:</span>
+          <span className={"filter__title"}>Sort By:</span>
           <Select
             defaultValue="release-date"
             className={"filter__select"}
@@ -86,10 +86,10 @@ export default function Games() {
         <Result
           className={"error"}
           status="error"
-          title="Submission Failed"
+          title="Error"
           subTitle={error?.error}
           extra={
-            <Button type="primary" onClick={() => refetch() }>
+            <Button type="primary" onClick={() => refetch()}>
               Try Again
             </Button>
           }
@@ -121,8 +121,8 @@ export default function Games() {
             }}
             current={+currentPage}
             pageSize={+pageSize}
-            // defaultCurrent={paginationInfo?.currentPage}
-            // defaultPageSize={paginationInfo?.pageSize}
+            defaultPageSize={12}
+            pageSizeOptions={[12, 24, 36, 48, 96]}
           />
         </>
       ) : null}

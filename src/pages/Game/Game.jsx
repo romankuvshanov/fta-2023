@@ -8,7 +8,7 @@ import { useGetGameQuery } from "../../services/freetogame";
 
 export default function Game() {
   const { gameId } = useParams();
-  const { data, error, isFetching } = useGetGameQuery(gameId);
+  const { data, error, isFetching, refetch } = useGetGameQuery(gameId);
   const navigate = useNavigate();
 
   return (
@@ -17,16 +17,26 @@ export default function Game() {
         <Result
           className={"error"}
           status="error"
-          title="Submission Failed"
+          title="Error"
           subTitle={error?.error}
-          extra={
-            <Button type="primary" onClick={() => navigate(-1)}>
+          extra={[
+            <Button
+              type="primary"
+              onClick={() => navigate(-1)}
+              key={"back-home"}
+            >
               Back Home
-            </Button>
-          }
+            </Button>,
+            <Button onClick={() => refetch()} key={"try-again"}>
+              Try Again
+            </Button>,
+          ]}
         ></Result>
       ) : isFetching ? (
         <div className={"loading"}>
+          <span className={"header__back-link"} onClick={() => navigate(-1)}>
+              <img width={24} height={24} src={arrowBack} alt={"Go back icon"} />
+            </span>
           <LoadingOutlined className={"loading__icon"} />
           <p className={"loading__message"}>Loading... Please, wait</p>
         </div>
@@ -34,7 +44,7 @@ export default function Game() {
         <>
           <header className={"header"}>
             <span className={"header__back-link"} onClick={() => navigate(-1)}>
-              <img src={arrowBack} alt={"Go back icon"} />
+              <img width={24} height={24} src={arrowBack} alt={"Go back icon"} />
             </span>
             <h1 className={"header__headline"}>{data?.title || "?"}</h1>
           </header>
