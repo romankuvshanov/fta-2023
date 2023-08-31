@@ -33,8 +33,6 @@ export default function Game() {
         ></Result>
       )}
 
-      {console.log(error)}
-
       {data && (
         <>
           <header className={"header"}>

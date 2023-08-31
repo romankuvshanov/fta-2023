@@ -14,7 +14,10 @@ export default function Games() {
   const [platform, setPlatform] = useState("all");
   const [tag, setTag] = useState("all");
   const [sort, setSort] = useState("release-date");
-  const [startEnd, setStartEnd] = useState({ start: 0, end: 10 });
+  const [paginationInfo, setPaginationInfo] = useState({
+    currentPage: 1,
+    pageSize: 10,
+  });
 
   const { data, error, isLoading } = useGetGamesQuery({
     platform: platform,
@@ -34,7 +37,10 @@ export default function Games() {
           <Select
             defaultValue="all"
             className={"filter__select"}
-            onChange={(value) => setPlatform(value)}
+            onChange={(value) => {
+              setPlatform(value);
+              setPaginationInfo({ ...paginationInfo, currentPage: 1 });
+            }}
             options={platformOptions}
           />
         </div>
@@ -43,7 +49,10 @@ export default function Games() {
           <Select
             defaultValue="all"
             className={"filter__select"}
-            onChange={(value) => setTag(value)}
+            onChange={(value) => {
+              setTag(value);
+              setPaginationInfo({ ...paginationInfo, currentPage: 1 });
+            }}
             options={tagsOptions}
           />
         </div>
@@ -52,7 +61,10 @@ export default function Games() {
           <Select
             defaultValue="release-date"
             className={"filter__select"}
-            onChange={(value) => setSort(value)}
+            onChange={(value) => {
+              setSort(value);
+              setPaginationInfo({ ...paginationInfo, currentPage: 1 });
+            }}
             options={sortingOptions}
           />
         </div>
@@ -77,9 +89,14 @@ export default function Games() {
 
       {data && (
         <div className={"games-wrapper"}>
-          {data?.slice(startEnd?.start, startEnd?.end)?.map((game) => {
-            return <GameCard gameData={game} key={game?.id} />;
-          }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
+          {data
+            ?.slice(
+              (paginationInfo?.currentPage - 1) * paginationInfo?.pageSize,
+              paginationInfo?.currentPage * paginationInfo?.pageSize,
+            )
+            ?.map((game) => {
+              return <GameCard gameData={game} key={game?.id} />;
+            }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
         </div>
       )}
 
@@ -90,8 +107,12 @@ export default function Games() {
         showTotal={(total) => `Total ${total} items`}
         className={"pagination"}
         onChange={(page, pageSize) =>
-          setStartEnd({ start: (page - 1) * pageSize, end: page * pageSize })
+          setPaginationInfo({ currentPage: page, pageSize: pageSize })
         }
+        current={paginationInfo?.currentPage}
+        pageSize={paginationInfo?.pageSize}
+        // defaultCurrent={paginationInfo?.currentPage}
+        // defaultPageSize={paginationInfo?.pageSize}
       />
     </>
   );
