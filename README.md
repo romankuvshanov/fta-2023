@@ -6,6 +6,10 @@ Run npm install then npm start. You can also go to: https://fta-2023.vercel.app/
 
 
 
+https://github.com/romankuvshanov/fta-2023/assets/83648973/03b0faef-a37a-407c-bba0-7699ccab3aeb
+
+
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
