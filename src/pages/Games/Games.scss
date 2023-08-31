@@ -26,11 +26,11 @@
   &__select {
     width: auto;
   }
-}
 
-.filter-title {
-  @include text-muted;
-  margin-right: 10px;
+  &__title {
+    @include text-muted;
+    margin-right: 10px;
+  }
 }
 
 .games-wrapper {
