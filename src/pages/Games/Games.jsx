@@ -1,5 +1,5 @@
 import "./Games.scss";
-import { Pagination, Result, Select } from "antd";
+import { Button, Pagination, Result, Select } from "antd";
 import {
   platformOptions,
   sortingOptions,
@@ -15,8 +15,8 @@ export default function Games() {
     platform: "all",
     tag: "all",
     sort: "release-date",
-    currentPage: '1',
-    pageSize: '10',
+    currentPage: "1",
+    pageSize: "10",
   });
 
   const platform = searchParams.get("platform");
@@ -25,13 +25,11 @@ export default function Games() {
   const currentPage = searchParams.get("currentPage");
   const pageSize = searchParams.get("pageSize");
 
-  const { data, error, isFetching } = useGetGamesQuery({
+  const { data, error, isFetching, refetch  } = useGetGamesQuery({
     platform: platform,
     tag: tag,
     sort: sort,
   });
-
-  console.log(error);
 
   return (
     <>
@@ -47,7 +45,7 @@ export default function Games() {
             value={platform}
             onChange={(value) => {
               searchParams.set("platform", value);
-              searchParams.set("currentPage", '1');
+              searchParams.set("currentPage", "1");
               setSearchParams(searchParams);
             }}
             options={platformOptions}
@@ -60,10 +58,9 @@ export default function Games() {
             className={"filter__select"}
             value={tag}
             onChange={(value) => {
-                searchParams.set("tag", value);
-                searchParams.set("currentPage", '1');
-                setSearchParams(searchParams);
-
+              searchParams.set("tag", value);
+              searchParams.set("currentPage", "1");
+              setSearchParams(searchParams);
             }}
             options={tagsOptions}
           />
@@ -75,10 +72,9 @@ export default function Games() {
             className={"filter__select"}
             value={sort}
             onChange={(value) => {
-                searchParams.set("sort", value);
-                searchParams.set("currentPage", '1');
-                setSearchParams(searchParams);
-
+              searchParams.set("sort", value);
+              searchParams.set("currentPage", "1");
+              setSearchParams(searchParams);
             }}
             options={sortingOptions}
           />
@@ -92,6 +88,11 @@ export default function Games() {
           status="error"
           title="Submission Failed"
           subTitle={error?.error}
+          extra={
+            <Button type="primary" onClick={() => refetch() }>
+              Try Again
+            </Button>
+          }
         ></Result>
       ) : isFetching ? (
         <div className={"loading"}>
@@ -114,12 +115,10 @@ export default function Games() {
             showTotal={(total) => `Total ${total} items`}
             className={"pagination"}
             onChange={(page, pageSize) => {
-                searchParams.set("pageSize", (pageSize).toString());
-                searchParams.set("currentPage", (page).toString());
-                setSearchParams(searchParams);
-            }
-
-            }
+              searchParams.set("pageSize", pageSize.toString());
+              searchParams.set("currentPage", page.toString());
+              setSearchParams(searchParams);
+            }}
             current={+currentPage}
             pageSize={+pageSize}
             // defaultCurrent={paginationInfo?.currentPage}

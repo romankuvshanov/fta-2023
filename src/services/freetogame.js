@@ -7,7 +7,7 @@ const staggeredBaseQuery = retry(
     prepareHeaders: (headers) => {
       headers.set(
         "X-RapidAPI-Key",
-        "78eb930ce8msh74b6ad7ad5abe54p137a16jsned1f0cc515fa",
+        "901c63a6b4msh5bad9315d02b963p1340b9jsnad370db89931",
       );
       headers.set(
         "X-RapidAPI-Host",

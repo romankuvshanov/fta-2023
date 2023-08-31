@@ -103,10 +103,11 @@
 }
 
 .carousel {
-  background-color: #23272b;
+  background-image: url("../../assets/images/screenshot_placeholder.png");
+  background-size: cover;
 
   &__image {
-    border-bottom: 25px solid #23272b;
+    border-bottom: 25px solid #23242A;
     box-sizing: border-box;
     margin: auto;
   }

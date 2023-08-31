@@ -1,6 +1,6 @@
 import "./Game.scss";
 import { Button, Carousel, Result } from "antd";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import arrowBack from "../../assets/icons/arrow_back.svg";
 import thumbnailPlaceholder from "../../assets/images/thumbnail_placeholder.png";
 import { LoadingOutlined } from "@ant-design/icons";
