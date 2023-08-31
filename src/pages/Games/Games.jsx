@@ -33,9 +33,7 @@ export default function Games() {
           <span className={"filter-title"}>Platform:</span>
           <Select
             defaultValue="all"
-            style={{
-              width: "auto",
-            }}
+            className={"filter__select"}
             onChange={(value) => setPlatform(value)}
             options={platformOptions}
           />
@@ -44,9 +42,7 @@ export default function Games() {
           <span className={"filter-title"}>Genre/Tag:</span>
           <Select
             defaultValue="all"
-            style={{
-              width: "auto",
-            }}
+            className={"filter__select"}
             onChange={(value) => setTag(value)}
             options={tagsOptions}
           />
@@ -55,9 +51,7 @@ export default function Games() {
           <span className={"filter-title"}>Sort By:</span>
           <Select
             defaultValue="release-date"
-            style={{
-              width: "100%",
-            }}
+            className={"filter__select"}
             onChange={(value) => setSort(value)}
             options={sortingOptions}
           />
@@ -88,6 +82,7 @@ export default function Games() {
           }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
         </div>
       )}
+
       <Pagination
         total={data?.length}
         showSizeChanger

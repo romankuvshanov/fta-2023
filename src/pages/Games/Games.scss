@@ -22,6 +22,10 @@
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: baseline;
+
+  &__select {
+    width: auto;
+  }
 }
 
 .filter-title {

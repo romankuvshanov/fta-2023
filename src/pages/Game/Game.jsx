@@ -4,13 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import arrowBack from "../../assets/icons/arrow_back.svg";
 import thumbnailPlaceholder from "../../assets/images/thumbnail_placeholder.png";
 import { LoadingOutlined } from "@ant-design/icons";
-import {useGetGameQuery} from "../../services/freetogame";
-
-const contentStyle = {
-  borderBottom: "25px solid #23272B",
-  boxSizing: "border-box",
-  margin: "auto",
-};
+import { useGetGameQuery } from "../../services/freetogame";
 
 export default function Game() {
   const { gameId } = useParams();
@@ -142,14 +136,18 @@ export default function Game() {
                     <img
                       src={screenshot?.image}
                       alt={"Screenshot from the game"}
-                      style={contentStyle}
+                      className={'carousel__image'}
+                      width={1920}
+                      height={1080}
                     />
                   </div>
                 );
               })}
             </Carousel>
           ) : (
-            <p className={'screenshots-message'}>Screenshots are not available</p>
+            <p className={"screenshots-message"}>
+              Screenshots are not available
+            </p>
           )}
         </>
       )}

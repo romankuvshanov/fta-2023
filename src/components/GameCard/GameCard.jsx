@@ -11,12 +11,14 @@ export default function GameCard({ gameData }) {
           alt={"Game thumbnail"}
           width={365}
           height={206}
-          className={'game-card__thumbnail'}
+          className={"game-card__thumbnail"}
         />
       </Link>
       <div className={"game-card__game-info"}>
         <p className={"game-info__title"}>
-          <Link to={`/game/${gameData?.id}`} className={'game-info__link'}>{gameData?.title || "?"}</Link>
+          <Link to={`/game/${gameData?.id}`} className={"game-info__link"}>
+            {gameData?.title || "?"}
+          </Link>
         </p>
         <p className={"game-info__pre-text"}>
           Release date:{" "}

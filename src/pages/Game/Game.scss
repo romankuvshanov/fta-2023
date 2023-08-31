@@ -47,10 +47,11 @@
   row-gap: 15px;
   margin-bottom: 15px;
   border-bottom: 2px solid #aaa;
+  padding-bottom: 10px;
+
   @media screen and (min-width: 610px) {
     padding-bottom: 30px;
   }
-  padding-bottom: 10px;
 
   @media screen and (max-width: 1025px) {
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -62,7 +63,7 @@
 }
 
 .game-information-wrapper {
-  @media screen and (max-width: 610px){
+  @media screen and (max-width: 610px) {
     border-top: 2px solid #aaa;
     padding-top: 10px;
   }
@@ -73,7 +74,6 @@
     border-top: none;
     padding: 0 20px;
   }
-
 }
 
 .small-title {
@@ -102,7 +102,13 @@
 }
 
 .carousel {
-  background-color: #23272B;
+  background-color: #23272b;
+
+  &__image {
+    border-bottom: 25px solid #23272b;
+    box-sizing: border-box;
+    margin: auto;
+  }
 
   &__image-wrapper {
     //display: flex;
