@@ -19,7 +19,7 @@ export default function Games() {
     pageSize: 10,
   });
 
-  const { data, error, isLoading } = useGetGamesQuery({
+  const { data, error, isFetching  } = useGetGamesQuery({
     platform: platform,
     tag: tag,
     sort: sort,
@@ -30,6 +30,7 @@ export default function Games() {
   return (
     <>
       <h1 className={"headline"}>Top Free Games for PC and Browser!</h1>
+
       <h2 className={"title-small"}>Sorting options</h2>
       <div className={"filters-wrapper"}>
         <div className={"filter"}>
@@ -71,49 +72,46 @@ export default function Games() {
       </div>
 
       <h2 className={"title-small"}>Games:</h2>
-      {isLoading && (
-        <div className={"loading"}>
-          <LoadingOutlined className={"loading__icon"} />
-          <p className={"loading__message"}>Loading... Please, wait</p>
-        </div>
-      )}
-
-      {error && (
+      {error ? (
         <Result
           className={"error"}
           status="error"
           title="Submission Failed"
           subTitle={error?.error}
         ></Result>
-      )}
-
-      {data && (
-        <div className={"games-wrapper"}>
-          {data
-            ?.slice(
-              (paginationInfo?.currentPage - 1) * paginationInfo?.pageSize,
-              paginationInfo?.currentPage * paginationInfo?.pageSize,
-            )
-            ?.map((game) => {
-              return <GameCard gameData={game} key={game?.id} />;
-            }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
+      ) : isFetching  ? (
+        <div className={"loading"}>
+          <LoadingOutlined className={"loading__icon"} />
+          <p className={"loading__message"}>Loading... Please, wait</p>
         </div>
-      )}
-
-      <Pagination
-        total={data?.length}
-        showSizeChanger
-        showQuickJumper
-        showTotal={(total) => `Total ${total} items`}
-        className={"pagination"}
-        onChange={(page, pageSize) =>
-          setPaginationInfo({ currentPage: page, pageSize: pageSize })
-        }
-        current={paginationInfo?.currentPage}
-        pageSize={paginationInfo?.pageSize}
-        // defaultCurrent={paginationInfo?.currentPage}
-        // defaultPageSize={paginationInfo?.pageSize}
-      />
+      ) : data ? (
+        <>
+          <div className={"games-wrapper"}>
+            {data
+              ?.slice(
+                (paginationInfo?.currentPage - 1) * paginationInfo?.pageSize,
+                paginationInfo?.currentPage * paginationInfo?.pageSize,
+              )
+              ?.map((game) => {
+                return <GameCard gameData={game} key={game?.id} />;
+              }) || <p className={"games-wrapper__no-games"}>No Games Found</p>}
+          </div>
+          <Pagination
+            total={data?.length}
+            showSizeChanger
+            showQuickJumper
+            showTotal={(total) => `Total ${total} items`}
+            className={"pagination"}
+            onChange={(page, pageSize) =>
+              setPaginationInfo({ currentPage: page, pageSize: pageSize })
+            }
+            current={paginationInfo?.currentPage}
+            pageSize={paginationInfo?.pageSize}
+            // defaultCurrent={paginationInfo?.currentPage}
+            // defaultPageSize={paginationInfo?.pageSize}
+          />
+        </>
+      ) : null}
     </>
   );
 }

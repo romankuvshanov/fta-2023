@@ -8,18 +8,11 @@ import { useGetGameQuery } from "../../services/freetogame";
 
 export default function Game() {
   const { gameId } = useParams();
-  const { data, error, isLoading } = useGetGameQuery(gameId);
+  const { data, error, isFetching } = useGetGameQuery(gameId);
 
   return (
     <>
-      {isLoading && (
-        <div className={"loading"}>
-          <LoadingOutlined className={"loading__icon"} />
-          <p className={"loading__message"}>Loading... Please, wait</p>
-        </div>
-      )}
-
-      {error && (
+      {error ? (
         <Result
           className={"error"}
           status="error"
@@ -31,9 +24,12 @@ export default function Game() {
             </Link>
           }
         ></Result>
-      )}
-
-      {data && (
+      ) : isFetching ? (
+        <div className={"loading"}>
+          <LoadingOutlined className={"loading__icon"} />
+          <p className={"loading__message"}>Loading... Please, wait</p>
+        </div>
+      ) : data ? (
         <>
           <header className={"header"}>
             <span>
@@ -134,7 +130,7 @@ export default function Game() {
                     <img
                       src={screenshot?.image}
                       alt={"Screenshot from the game"}
-                      className={'carousel__image'}
+                      className={"carousel__image"}
                       width={1920}
                       height={1080}
                     />
@@ -148,7 +144,7 @@ export default function Game() {
             </p>
           )}
         </>
-      )}
+      ) : null}
     </>
   );
 }
